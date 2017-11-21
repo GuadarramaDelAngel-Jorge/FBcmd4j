@@ -1,6 +1,8 @@
 package org.fbcmd4j.utils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -76,8 +78,13 @@ public class Utils {
 	}
 
 	public static void postLink(String link, Facebook fb) {
-		// TODO Auto-generated method stub
-		
+		try {
+			fb.postLink(new URL(link));
+		} catch (MalformedURLException e) {
+			logger.error(e);
+		} catch (FacebookException e) {
+			logger.error(e);
+		}
 	}
 
 	public static void savePostsToFile(String fileName, List<Post> ps) {
