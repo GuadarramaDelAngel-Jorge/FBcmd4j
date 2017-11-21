@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.function.BiConsumer;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
+import facebook4j.Post;
 import facebook4j.auth.AccessToken;
 
 public class Utils {
@@ -47,6 +50,31 @@ public class Utils {
 		fb.setOAuthPermissions(props.getProperty("oauth.permissions"));
 		fb.setOAuthAccessToken(new AccessToken(props.getProperty("oauth.accessToken"), null));
 		return fb;
+		
+	}
+
+	public static void configTokens(String configDir, String configFile, Properties props, Scanner scan) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void printPost(Post p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void postStatus(String estado, Facebook fb) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void postLink(String link, Facebook fb) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void savePostsToFile(String fileName, List<Post> ps) {
+		// TODO Auto-generated method stub
 		
 	}
 	
