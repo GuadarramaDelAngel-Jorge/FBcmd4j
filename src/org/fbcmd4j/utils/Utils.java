@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import facebook4j.Facebook;
+import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.Post;
 import facebook4j.auth.AccessToken;
@@ -66,9 +67,12 @@ public class Utils {
 		System.out.println("--------------------------------");
 	}
 
-	public static void postStatus(String estado, Facebook fb) {
-		// TODO Auto-generated method stub
-		
+	public static void postStatus(String msg, Facebook fb) {
+		try {
+			fb.postStatusMessage(msg);
+		} catch (FacebookException e) {
+			logger.error(e);
+		}		
 	}
 
 	public static void postLink(String link, Facebook fb) {
