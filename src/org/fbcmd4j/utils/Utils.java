@@ -1,4 +1,4 @@
-package fbcmd4j.utils;
+package org.fbcmd4j.utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +9,10 @@ import java.util.function.BiConsumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import facebook4j.Facebook;
+import facebook4j.FacebookFactory;
+import facebook4j.auth.AccessToken;
 
 public class Utils {
 
@@ -36,4 +40,14 @@ public class Utils {
 
 		return props;
 	}
+	
+	public static Facebook configFacebook(Properties props) {
+		Facebook fb = new FacebookFactory().getInstance();
+		fb.setOAuthAppId(props.getProperty("oauth.appId"), props.getProperty("oauth.appSecret"));
+		fb.setOAuthPermissions(props.getProperty("oauth.permissions"));
+		fb.setOAuthAccessToken(new AccessToken(props.getProperty("oauth.accessToken"), null));
+		return fb;
+		
+	}
+	
 }
