@@ -1,5 +1,7 @@
 package org.fbcmd4j.utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -87,9 +89,32 @@ public class Utils {
 		}
 	}
 
-	public static void savePostsToFile(String fileName, List<Post> ps) {
-		// TODO Auto-generated method stub
-		
+	public static String savePostsToFile(String fileName, List<Post> posts) {
+		File file = new File(fileName + ".txt");
+
+		try {
+    		if(!file.exists()) {
+    			file.createNewFile();
+            }
+
+    		FileOutputStream fos = new FileOutputStream(file);
+			for (Post p : posts) {
+				String msg = "";
+				if(p.getStory() != null)
+					msg += "Story: " + p.getStory() + "\n";
+				if(p.getMessage() != null)
+					msg += "Mensaje: " + p.getMessage() + "\n";
+				msg += "--------------------------------\n";
+				fos.write(msg.getBytes());
+			}
+			fos.close();
+
+			logger.info("Posts guardados en el archivo '" + file.getName() + "'.");
+			System.out.println("Posts guardados exitosamente en '" + file.getName() + "'.");
+		} catch (IOException e) {
+			logger.error(e);
+		}
+        
+        return file.getName();
 	}
-	
 }
