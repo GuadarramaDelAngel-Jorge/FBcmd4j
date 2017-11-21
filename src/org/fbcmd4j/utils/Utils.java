@@ -70,6 +70,7 @@ public class Utils {
 		/*
 		 * 378017342653331
 		 * 7380b6f6e3c07d5d1e2cb0aee2f7e66e
+		 * MIS CLAVES
 		 * */
 		try {
 			URL url = new URL("https://graph.facebook.com/v2.6/device/login");
@@ -102,8 +103,6 @@ public class Utils {
 	        JSONObject obj = new JSONObject(response);
 	        String code = obj.getString("code");
 	        String userCode = obj.getString("user_code");
-	        
-			System.out.println("Ingresa a la pagina https://www.facebook.com/device con el codigo: " + userCode);
 
 			String accessToken = "";
 			while(accessToken.isEmpty()) {
@@ -151,8 +150,8 @@ public class Utils {
 	        props.setProperty("oauth.accessToken", accessToken);
 	        
 			saveProperties(folderName, fileName, props);
-			System.out.println("Configuracion guardada exitosamente.");
-			logger.info("Configuracion guardada exitosamente.");
+			System.out.println("Configuracion guardada.");
+			logger.info("Configuracion guardada.");
 		} catch(Exception e) {
 			logger.error(e);
 		}
