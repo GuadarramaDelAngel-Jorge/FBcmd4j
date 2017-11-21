@@ -1,16 +1,24 @@
 package org.fbcmd4j.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +29,7 @@ import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.Post;
 import facebook4j.auth.AccessToken;
+import facebook4j.internal.org.json.JSONObject;
 
 public class Utils {
 
@@ -58,9 +67,109 @@ public class Utils {
 		
 	}
 
-	public static void configTokens(String configDir, String configFile, Properties props, Scanner scan) {
-		// TODO Auto-generated method stub
+	public static void configTokens(String folderName, String fileName, Properties props, Scanner sc) {
+		if (props.getProperty("oauth.appId").isEmpty() || props.getProperty("oauth.appSecret").isEmpty()) {
+			System.out.println("Por favor ingrese el identificador de la aplicacion:");
+			props.setProperty("oauth.appId", sc.nextLine());
+			System.out.println("Por favor ingrese la clave secreta de aplicacion:");
+			props.setProperty("oauth.appSecret", sc.nextLine());
+		}
+// probando
 		
+		/*
+		 * 378017342653331
+		 * 7380b6f6e3c07d5d1e2cb0aee2f7e66e
+		 * */
+		try {
+			URL url = new URL("https://graph.facebook.com/v2.11/device/login");
+	        Map<String,Object> params = new LinkedHashMap<>();
+	        params.put("access_token", "378017342653331|7380b6f6e3c07d5d1e2cb0aee2f7e66e");
+	        params.put("scope", props.getProperty("oauth.permissions"));
+
+	        StringBuilder postData = new StringBuilder();
+	        for (Map.Entry<String,Object> param : params.entrySet()) {
+	            if (postData.length() != 0) postData.append('&');
+	            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+	            postData.append('=');
+	            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+	        }
+	        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+	        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+	        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+	        conn.setDoOutput(true);
+	        conn.getOutputStream().write(postDataBytes);
+
+	        Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+	        StringBuilder sb = new StringBuilder();
+	        for (int c; (c = in.read()) >= 0;)
+	            sb.append((char)c);
+	        String response = sb.toString();
+	        
+	        JSONObject obj = new JSONObject(response);
+	        String code = obj.getString("code");
+	        String userCode = obj.getString("user_code");
+	        
+			System.out.println("Ingresa a la pagina https://www.facebook.com/device con el codigo: " + userCode);
+
+			String accessToken = "";
+			while(accessToken.isEmpty()) {
+		        try {
+		            TimeUnit.SECONDS.sleep(5);
+		        } catch (InterruptedException e) {
+					logger.error(e);
+		        }
+
+		        URL url1 = new URL("https://graph.facebook.com/v2.11/device/login_status");
+		        params = new LinkedHashMap<>();
+		        params.put("access_token", "378017342653331|7380b6f6e3c07d5d1e2cb0aee2f7e66e");
+		        params.put("code", code);
+	
+		        postData = new StringBuilder();
+		        for (Map.Entry<String,Object> param : params.entrySet()) {
+		            if (postData.length() != 0) postData.append('&');
+		            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+		            postData.append('=');
+		            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+		        }
+		        postDataBytes = postData.toString().getBytes("UTF-8");
+	
+		        HttpURLConnection conn1 = (HttpURLConnection)url1.openConnection();
+		        conn1.setRequestMethod("POST");
+		        conn1.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+		        conn1.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+		        conn1.setDoOutput(true);
+		        conn1.getOutputStream().write(postDataBytes);
+
+
+		        try {
+		        	in = new BufferedReader(new InputStreamReader(conn1.getInputStream(), "UTF-8"));
+			        sb = new StringBuilder();
+			        for (int c; (c = in.read()) >= 0;)
+			            sb.append((char)c);		        
+			        response = sb.toString();
+			        
+			        obj = new JSONObject(response);
+			        accessToken = obj.getString("access_token");
+		        } catch(IOException ignore) {
+		        }
+		    }
+			
+	        props.setProperty("oauth.accessToken", accessToken);
+	        
+			saveProperties(folderName, fileName, props);
+			System.out.println("Configuracion guardada exitosamente.");
+			logger.info("Configuracion guardada exitosamente.");
+		} catch(Exception e) {
+			logger.error(e);
+		}
+	}
+	
+	public static void saveProperties(String folderName, String fileName, Properties props) throws IOException {
+		Path configFile = Paths.get(folderName, fileName);
+		props.store(Files.newOutputStream(configFile), "Generado por org.fbcmd4j.configTokens");
 	}
 
 	public static void printPost(Post p) {

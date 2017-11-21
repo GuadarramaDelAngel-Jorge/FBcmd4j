@@ -91,10 +91,10 @@ public class Main {
 					System.out.println("Ocurrio un error, favor de revisar log.");
 					logger.error("Opcion invalida. %s. \n", ex.getClass());
 				} catch (FacebookException ex) {
-					System.out.println("Ocurrio un errror, favor de revisar log.");
+					System.out.println("Ocurrio un error, favor de revisar log.");
 					logger.error(ex.getErrorMessage());
 				} catch (Exception ex) {
-					System.out.println("Ocurrio un errror, favor de revisar log.");
+					System.out.println("Ocurrio un error, favor de revisar log.");
 					logger.error(ex);
 				}
 				System.out.println();
