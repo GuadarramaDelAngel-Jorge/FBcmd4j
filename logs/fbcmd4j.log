@@ -1,2 +1,10 @@
 2017-11-21 13:55:46.559 [main] INFO  org.fbcmd4j.Main - Iniciando fbcmd4j
 2017-11-21 13:57:04.670 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.
+2017-11-21 14:18:01.329 [main] INFO  org.fbcmd4j.Main - Iniciando fbcmd4j
+2017-11-21 14:18:24.586 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.
+2017-11-21 14:19:04.683 [main] INFO  org.fbcmd4j.Main - Iniciando fbcmd4j
+2017-11-21 14:19:07.686 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.
+2017-11-21 14:19:11.447 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.
+2017-11-21 14:21:42.398 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.
+2017-11-21 14:52:54.466 [main] INFO  org.fbcmd4j.Main - Iniciando fbcmd4j
+2017-11-21 14:53:51.477 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.

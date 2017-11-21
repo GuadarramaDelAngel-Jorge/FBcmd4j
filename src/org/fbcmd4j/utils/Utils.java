@@ -58,15 +58,6 @@ public class Utils {
 		return props;
 	}
 	
-	public static Facebook configFacebook(Properties props) {
-		Facebook fb = new FacebookFactory().getInstance();
-		fb.setOAuthAppId(props.getProperty("oauth.appId"), props.getProperty("oauth.appSecret"));
-		fb.setOAuthPermissions(props.getProperty("oauth.permissions"));
-		fb.setOAuthAccessToken(new AccessToken(props.getProperty("oauth.accessToken"), null));
-		return fb;
-		
-	}
-
 	public static void configTokens(String folderName, String fileName, Properties props, Scanner sc) {
 		if (props.getProperty("oauth.appId").isEmpty() || props.getProperty("oauth.appSecret").isEmpty()) {
 			System.out.println("Por favor ingrese el identificador de la aplicacion:");
@@ -81,9 +72,9 @@ public class Utils {
 		 * 7380b6f6e3c07d5d1e2cb0aee2f7e66e
 		 * */
 		try {
-			URL url = new URL("https://graph.facebook.com/v2.11/device/login");
+			URL url = new URL("https://graph.facebook.com/v2.6/device/login");
 	        Map<String,Object> params = new LinkedHashMap<>();
-	        params.put("access_token", "378017342653331|7380b6f6e3c07d5d1e2cb0aee2f7e66e");
+	        params.put("access_token", "378017342653331|SRivQ4Ji7__M9y2PggTFl3o-3x0");
 	        params.put("scope", props.getProperty("oauth.permissions"));
 
 	        StringBuilder postData = new StringBuilder();
@@ -122,9 +113,9 @@ public class Utils {
 					logger.error(e);
 		        }
 
-		        URL url1 = new URL("https://graph.facebook.com/v2.11/device/login_status");
+		        URL url1 = new URL("https://graph.facebook.com/v2.6/device/login_status");
 		        params = new LinkedHashMap<>();
-		        params.put("access_token", "378017342653331|7380b6f6e3c07d5d1e2cb0aee2f7e66e");
+		        params.put("access_token", "378017342653331|SRivQ4Ji7__M9y2PggTFl3o-3x0");
 		        params.put("code", code);
 	
 		        postData = new StringBuilder();
@@ -170,6 +161,16 @@ public class Utils {
 	public static void saveProperties(String folderName, String fileName, Properties props) throws IOException {
 		Path configFile = Paths.get(folderName, fileName);
 		props.store(Files.newOutputStream(configFile), "Generado por org.fbcmd4j.configTokens");
+	}
+
+	
+	public static Facebook configFacebook(Properties props) {
+		Facebook fb = new FacebookFactory().getInstance();
+		fb.setOAuthAppId(props.getProperty("oauth.appId"), props.getProperty("oauth.appSecret"));
+		fb.setOAuthPermissions(props.getProperty("oauth.permissions"));
+		fb.setOAuthAccessToken(new AccessToken(props.getProperty("oauth.accessToken"), null));
+		return fb;
+		
 	}
 
 	public static void printPost(Post p) {
