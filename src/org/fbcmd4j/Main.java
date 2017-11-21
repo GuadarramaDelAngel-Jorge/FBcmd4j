@@ -1,4 +1,4 @@
-package org.fbcmd4j_;
+package org.fbcmd4j;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class Main {
 	private static final String CONFIG_DIR = "config";
 	private static final String CONFIG_FILE = "fbcmd4j.properties";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		logger.info("Iniciando fbcmd4j");
 		Facebook fb =  null;
 		Properties props = null;
