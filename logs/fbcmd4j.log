@@ -1,0 +1,2 @@
+2017-11-21 13:55:46.559 [main] INFO  org.fbcmd4j.Main - Iniciando fbcmd4j
+2017-11-21 13:57:04.670 [main] ERROR org.fbcmd4j.Main - An active access token must be used to query information about the current user.
