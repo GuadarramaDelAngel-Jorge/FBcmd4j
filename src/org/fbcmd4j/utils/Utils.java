@@ -59,8 +59,11 @@ public class Utils {
 	}
 
 	public static void printPost(Post p) {
-		// TODO Auto-generated method stub
-		
+		if(p.getStory() != null)
+			System.out.println("Story: " + p.getStory());
+		if(p.getMessage() != null)
+			System.out.println("Mensaje: " + p.getMessage());
+		System.out.println("--------------------------------");
 	}
 
 	public static void postStatus(String estado, Facebook fb) {
