@@ -102,7 +102,7 @@ public class Utils {
 	        
 	        JSONObject obj = new JSONObject(response);
 	        String code = obj.getString("code");
-	        String userCode = obj.getString("user_code");
+	        //String userCode = obj.getString("user_code");
 
 			String accessToken = "";
 			while(accessToken.isEmpty()) {
