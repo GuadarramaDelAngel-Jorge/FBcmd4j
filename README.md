@@ -25,6 +25,28 @@ git clone https://github.com/GuadarramaDelAngel-Jorge/-fbcmd4j.git
 4. Ejecutar el comando `java -jar fbcmd4j.jar`.
 
 ## Uso
+**Configurar tokens**   
+1. Seleccionar la opción 0 `Configurar tokens`.
+2. Escribir identificador de aplicación.
+3. Escribir clave secreta de aplicación.
+
+**Obtener el NewsFeed**   
+1. Seleccionar la opción 1 `NewsFeed`.
+2. Escribir 'Si' en caso de querer guardar los posts en un archivo.
+	* Escribir el número de posts a guardar.
+
+**Obtener el Wall**   
+1. Seleccionar la opción 2 `Wall`.
+2. Escribir 'Si' en caso de querer guardar los posts en un archivo.
+	* Escribir el número de posts a guardar.
+
+**Publicar un Estado**   
+1. Seleccionar la opción 3 `Publicar Estado`.
+2. Escribir el estado deseado.
+
+**Publicar un Link**   
+1. Seleccionar la opción 4 `Publicar Link`.
+2. Escribir el link deseado.
 
 ## Créditos
 
